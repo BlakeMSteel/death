@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/death/static/css/main.2cce8147.chunk.css",
-    "main.js": "/death/static/js/main.da0f963b.chunk.js",
-    "main.js.map": "/death/static/js/main.da0f963b.chunk.js.map",
+    "main.js": "/death/static/js/main.6e71e5cd.chunk.js",
+    "main.js.map": "/death/static/js/main.6e71e5cd.chunk.js.map",
     "runtime~main.js": "/death/static/js/runtime~main.f752169a.js",
     "runtime~main.js.map": "/death/static/js/runtime~main.f752169a.js.map",
-    "static/js/2.f56fc3ff.chunk.js": "/death/static/js/2.f56fc3ff.chunk.js",
-    "static/js/2.f56fc3ff.chunk.js.map": "/death/static/js/2.f56fc3ff.chunk.js.map",
+    "static/js/2.aec87859.chunk.js": "/death/static/js/2.aec87859.chunk.js",
+    "static/js/2.aec87859.chunk.js.map": "/death/static/js/2.aec87859.chunk.js.map",
     "index.html": "/death/index.html",
-    "precache-manifest.f2e5202bb5f2d8d1dcf4068fcceac935.js": "/death/precache-manifest.f2e5202bb5f2d8d1dcf4068fcceac935.js",
+    "precache-manifest.d2a0e60bab285c5b9c9750255e2bbbf6.js": "/death/precache-manifest.d2a0e60bab285c5b9c9750255e2bbbf6.js",
     "service-worker.js": "/death/service-worker.js",
     "static/css/main.2cce8147.chunk.css.map": "/death/static/css/main.2cce8147.chunk.css.map"
   }
