@@ -1,46 +1,49 @@
-import ActiveEntity from './entities/activeEntity.js';
+import ActiveEntity from './entities/activeEntity';
+import Entity from './entities/entity';
 import Map from './map/map';
 import Player from './entities/player';
 import * as ROT from 'rot-js';
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH } from './constants';
 import Zombie from './entities/zombie';
 import Bat from './entities/bat';
+import Stairs from './entities/stairs';
 
 class Game {
-    display: ROT.Display;
     engine: ROT.Engine;
     entities: Array<ActiveEntity>;
     player: Player;
     map: Map;
     scheduler = new ROT.Scheduler.Simple();
+    stairs?: Stairs;
 
     constructor() {
-        this.display = new ROT.Display({
-            width: DISPLAY_WIDTH,
-            height: DISPLAY_HEIGHT,
-            fontSize: 15
-        });
-
-        document.body.appendChild(this.display.getContainer()!);
-
-        this.map = new Map(DISPLAY_WIDTH, DISPLAY_HEIGHT, this.display.draw.bind(this.display));
+        this.map = new Map(DISPLAY_WIDTH, DISPLAY_HEIGHT);
         
         this.entities = new Array<ActiveEntity>();
         this.player = new Player(-1, -1, this);
         this.generatePlayer(this.player);
-        this.generateEntity(Zombie);
-        this.generateEntity(Bat);
+        this.generateActiveEntity(Zombie);
+        this.generateActiveEntity(Bat);
+        this.stairs = this.generateEntity(Stairs);
 
         this.engine = new ROT.Engine(this.scheduler);
         this.engine.start();
     }
 
-    private generateEntity(type: new (x: number, y: number, game: Game) => ActiveEntity) {
+    private generateActiveEntity(type: new (x: number, y: number, game: Game) => ActiveEntity) {
         const newEntity = new type(-1, -1, this);
         const placeable = this.map.putActiveEntityInRandomFreeSpace(newEntity);
         if (placeable) {
             this.entities.push(newEntity);
             this.scheduler.add(newEntity, true);
+        }
+    }
+
+    private generateEntity(type: new () => Entity) {
+        const newEntity = new type();
+        const placeable = this.map.putEntityInRandomFreeSpace(newEntity);
+        if (placeable) {
+            return newEntity;
         }
     }
 

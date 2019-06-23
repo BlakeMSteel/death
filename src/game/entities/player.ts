@@ -19,6 +19,7 @@ class Player extends ActiveEntity{
 
     public act() {
         this.game.engine.lock();
+        this.game.map.getFOVFromLocation(this.x, this.y);
         window.document.addEventListener("keydown", this.handleEvent);
     }
 

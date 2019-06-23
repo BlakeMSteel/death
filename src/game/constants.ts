@@ -6,7 +6,7 @@ export const DISPLAY_HEIGHT = 40;
 export const BAT = {
     CHAR: "b",
     COLOR: "blue",
-    PRIORITY: 3
+    PRIORITY: 41
 }
 export const BOX = {
     CHAR: "*",
@@ -15,24 +15,31 @@ export const BOX = {
 }
 export const FLOOR = {
     CHAR: ".",
-    COLOR: "#CCCCCC",
+    COLOR: "#808080",
     PRIORITY: -1
 }
 export const PLAYER = {
     ID: -1,
     CHAR: "@",
     COLOR: "#00FF00",
-    PRIORITY: 100
+    PRIORITY: 100,
+    VISION_RADIUS: 12
+}
+export const STAIRS = {
+    ID: -2,
+    CHAR: "<",
+    COLOR: "orange",
+    PRIORITY: 2
 }
 export const WALL = {
-    CHAR: " ",
+    CHAR: "#",
     COLOR: "#FFFFFF",
     PRIORITY: 0
 }
 export const ZOMBIE = {
     CHAR: "z",
     COLOR: "#CC00FF",
-    PRIORITY: 2
+    PRIORITY: 40
 }
 
 //Map Types

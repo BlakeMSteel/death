@@ -3,32 +3,23 @@ import ActiveEntity from '../entities/activeEntity';
 import Tile from './tile';
 import Wall from '../entities/wall';
 import Floor from '../entities/floor'
-import { DISPLAY_HEIGHT, DISPLAY_WIDTH, MAP_TYPE } from '../constants';
+import { DISPLAY_HEIGHT, DISPLAY_WIDTH, MAP_TYPE, PLAYER } from '../constants';
 import Entity from '../entities/entity';
 
 class Map {
     private _map: Array<Array<Tile>>;
-    private _draw: (
-        x: number,
-        y: number,
-        character: string | string[] | null,
-        color: string | null,
-        backgroundColor: string | null
-        ) => void;
+    private display: ROT.Display;
 
     constructor(
         width: number,
         height: number,
-        draw: (
-            x: number,
-            y: number,
-            character: string | string[] | null,
-            color: string | null,
-            backgroundColor: string | null
-            ) => void
     ) {
         this._map = this.create2DArrayOfTiles(width, height);
-        this._draw = draw;
+        this.display = new ROT.Display({
+            width,
+            height,
+            fontSize: 15
+        });
         this.generateMap(MAP_TYPE.DUNGEON_UNIFORM);
     }
 
@@ -55,10 +46,12 @@ class Map {
         if (!entity) {
             entity = new Floor();
         }
-        this._draw(x, y, entity.character, entity.color, entity.backgroundColor);
+        this.display.draw(x, y, entity.character, entity.color, entity.backgroundColor);
     }
 
     private generateMap( type: string = MAP_TYPE.ARENA ) {
+        document.body.appendChild(this.display.getContainer()!);
+
         var mapper = null;
         switch(type) {
             case MAP_TYPE.ARENA:
@@ -118,7 +111,6 @@ class Map {
         var mapperCallback = (x: number, y: number, value: number) => {
             //value = 1 -> wall
             //value = 0 -> empty space
-            var key = x + "," + y;
             if (value) {
                 this._map[x][y] = new Tile(new Wall());
             } else {
@@ -133,8 +125,6 @@ class Map {
             }
             mapper.create(mapperCallback.bind(this));
         }
-
-        this.drawMap();
     }
 
     private getFreeTiles() {
@@ -149,6 +139,29 @@ class Map {
         }
 
         return freeTiles;
+    }
+
+    public getFOVFromLocation(locationX: number, locationY: number) {
+        this.display.clear();
+        const lightPasses = (x: number, y: number) => {
+            if (x >= 0 && x < DISPLAY_WIDTH && y >= 0 && y < DISPLAY_HEIGHT) {
+                if (!this._map[x][y].isImmoveable()) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        const fov = new ROT.FOV.PreciseShadowcasting(lightPasses);
+
+        fov.compute(
+            locationX,
+            locationY,
+            PLAYER.VISION_RADIUS,
+            (x: number, y: number, radius: number, visibility: number) => {
+                this.drawTile(x, y);
+            }
+        );
     }
 
     public isSpaceCollideable(x: number, y: number) {
@@ -166,7 +179,6 @@ class Map {
                     this._map[i][j].removeEntity(entity);
                     this.drawTile(i, j);
                     this._map[x][y].addEntity(entity);
-                    this.drawTile(x, y);
                 }
             }
         }
@@ -187,7 +199,22 @@ class Map {
         entity.setY(y);
 
         this._map[x][y].addEntity(entity);
-        this.drawTile(x, y);
+        return true;
+    }
+
+    public putEntityInRandomFreeSpace(entity: Entity) {
+        let freeTiles = this.getFreeTiles();
+        if (freeTiles.length === 0) {
+            return false;
+        }
+
+        const freeCellIndex = ROT.RNG.getUniformInt(0, freeTiles.length - 1);
+        const xyParts = freeTiles[freeCellIndex].split(",");
+        freeTiles.splice(freeCellIndex, 1);
+        const x = parseInt(xyParts[0]);
+        const y = parseInt(xyParts[1]);
+
+        this._map[x][y].addEntity(entity);
         return true;
     }
 
