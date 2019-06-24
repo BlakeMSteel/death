@@ -1,6 +1,6 @@
 import ActiveEntity from './activeEntity';
 import * as ROT from 'rot-js';
-import { PLAYER } from '../constants';
+import { PLAYER, COMMA } from '../constants';
 import Game from '../game';
 
 class Player extends ActiveEntity{
@@ -24,6 +24,7 @@ class Player extends ActiveEntity{
     }
 
     private handleEvent = (e: any) => {
+        console.log('player Turn');
         let keyMap: { [keyCode: number]: number } = {
             38: 0,
             33: 1,
@@ -37,10 +38,18 @@ class Player extends ActiveEntity{
 
         var code = e.keyCode;
 
+        if (code === COMMA) {
+            this.game.advanceFloors();
+            window.removeEventListener("keydown", this.handleEvent);
+            this.game.engine.unlock();
+            return;
+        }
+
         if (!(code in keyMap)) {
             return;
         }
 
+        console.log(this.x, this.y);
         var diff = ROT.DIRS[8][keyMap[code]];
         let newX = this.x + diff[0];
         let newY = this.y + diff[1];

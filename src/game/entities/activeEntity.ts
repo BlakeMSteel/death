@@ -57,7 +57,9 @@ abstract class ActiveEntity extends Entity {
         astar.compute(this.x, this.y, pathCallback);
 
         path.shift(); // Remove current position
-        if (path.length == 1) {
+        if (path.length == 0) {
+            
+        } else if (path.length == 1) {
             alert("Game over - you were captured!");
             this.game.engine.lock();
         } else {

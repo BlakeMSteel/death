@@ -56,3 +56,6 @@ export const MAP_TYPE = {
 
 //RNG
 export const ID_UPPER_BOUND = 999999;
+
+//KeyCodes
+export const COMMA = 188;

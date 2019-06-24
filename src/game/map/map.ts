@@ -33,14 +33,6 @@ class Map {
         return array;
     }
 
-    private drawMap() {
-        for (let x = 0; x < this._map.length; x++) {
-            for (let y = 0; y < this._map[x].length; y++) {
-                this.drawTile(x, y);
-            }
-        }
-    }
-
     private drawTile(x: number, y: number) {
         let entity = this._map[x][y].getDisplayedTile();
         if (!entity) {
@@ -216,6 +208,10 @@ class Map {
 
         this._map[x][y].addEntity(entity);
         return true;
+    }
+
+    public removeDisplayFromDOM() {
+        document.body.removeChild(document.body.getElementsByTagName('canvas')[0]);
     }
 
     public removeEntity(entity: ActiveEntity) {

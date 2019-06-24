@@ -17,17 +17,40 @@ class Game {
     stairs?: Stairs;
 
     constructor() {
-        this.map = new Map(DISPLAY_WIDTH, DISPLAY_HEIGHT);
-        
+        this.engine = new ROT.Engine(this.scheduler);
         this.entities = new Array<ActiveEntity>();
         this.player = new Player(-1, -1, this);
+        this.map = new Map(DISPLAY_WIDTH, DISPLAY_HEIGHT);
+        this.advanceFloors();
+        this.engine.start();
+    }
+
+    public advanceFloors() {
+        console.log(this.scheduler);
+        if (this.player) {
+            this.scheduler.remove(this.player);
+        }
+        while (this.entities.length > 0) {
+            this.removeEntity(this.entities[0]);
+        }
+        console.log(this.scheduler);
+        if (!!this.map) {
+            console.log('map exists');
+            this.map.removeDisplayFromDOM();
+        }
+        this.map = new Map(DISPLAY_WIDTH, DISPLAY_HEIGHT);
+
+        this.entities = new Array<ActiveEntity>();
+
+        this.player = new Player(-1, -1, this);
+        console.log('generating player', this.player);
         this.generatePlayer(this.player);
+        console.log('pGP', this.scheduler);
+        this.generateActiveEntity(Zombie);
         this.generateActiveEntity(Zombie);
         this.generateActiveEntity(Bat);
+        this.generateActiveEntity(Bat);
         this.stairs = this.generateEntity(Stairs);
-
-        this.engine = new ROT.Engine(this.scheduler);
-        this.engine.start();
     }
 
     private generateActiveEntity(type: new (x: number, y: number, game: Game) => ActiveEntity) {
@@ -37,6 +60,7 @@ class Game {
             this.entities.push(newEntity);
             this.scheduler.add(newEntity, true);
         }
+        console.log('entities', this.entities);
     }
 
     private generateEntity(type: new () => Entity) {
@@ -50,12 +74,12 @@ class Game {
     private generatePlayer(player: Player) {
         const placeable = this.map.putActiveEntityInRandomFreeSpace(player);
         if (placeable) {
-            this.player = player;
             this.scheduler.add(player, true);
         }
     }
 
     public removeEntity(entity: ActiveEntity) {
+        console.log('removing entity', entity);
         this.map.removeEntity(entity);
         this.scheduler.remove(entity);
         var index = this.entities.indexOf(entity);

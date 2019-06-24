@@ -20,6 +20,7 @@ class Zombie extends ActiveEntity {
     }
 
     public act() {
+        console.log('zombie turn');
         if (!this.skippingTurn) {
             super.moveTowardsPlayer(4);
         } else if (super.isInPositionOfPlayer()) {
