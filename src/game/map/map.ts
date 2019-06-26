@@ -1,10 +1,11 @@
 import * as ROT from 'rot-js';
 import ActiveEntity from '../entities/activeEntity';
 import Tile from './tile';
-import Wall from '../entities/wall';
-import Floor from '../entities/floor'
+import Wall from '../entities/environment/wall';
+import Floor from '../entities/environment/floor'
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH, MAP_TYPE, PLAYER } from '../constants';
 import Entity from '../entities/entity';
+import Stairs from '../entities/environment/stairs';
 
 class Map {
     private _map: Array<Array<Tile>>;
@@ -133,7 +134,11 @@ class Map {
         return freeTiles;
     }
 
-    public getFOVFromLocation(locationX: number, locationY: number) {
+    public doesSpaceContainStairs(x: number, y: number) {
+        return this._map[x][y].doesTileContainEntity(new Stairs());
+    }
+
+    public drawFOVFromLocation(locationX: number, locationY: number) {
         this.display.clear();
         const lightPasses = (x: number, y: number) => {
             if (x >= 0 && x < DISPLAY_WIDTH && y >= 0 && y < DISPLAY_HEIGHT) {
@@ -167,10 +172,11 @@ class Map {
     public moveEntity(entity: Entity, x: number, y: number) {
         for (let i = 0; i < this._map.length; i++) {
             for (let j = 0; j < this._map[i].length; j++) {
-                if (this._map[i][j].checkEntity(entity)) {
+                if (this._map[i][j].doesTileContainEntity(entity)) {
                     this._map[i][j].removeEntity(entity);
                     this.drawTile(i, j);
                     this._map[x][y].addEntity(entity);
+                    return;
                 }
             }
         }

@@ -1,7 +1,7 @@
-import ActiveEntity from './activeEntity';
-import Game from '../game';
+import ActiveEntity from '../activeEntity';
+import Game from '../../game';
 import * as ROT from 'rot-js';
-import { ZOMBIE, ID_UPPER_BOUND } from '../constants';
+import { ZOMBIE, ID_UPPER_BOUND } from '../../constants';
 
 class Zombie extends ActiveEntity {
     private skippingTurn = false;
@@ -20,7 +20,6 @@ class Zombie extends ActiveEntity {
     }
 
     public act() {
-        console.log('zombie turn');
         if (!this.skippingTurn) {
             super.moveTowardsPlayer(4);
         } else if (super.isInPositionOfPlayer()) {

@@ -1,7 +1,8 @@
 import ActiveEntity from './activeEntity';
 import * as ROT from 'rot-js';
-import { PLAYER, COMMA } from '../constants';
+import { PLAYER, COMMA, MOVEMENT_KEYCODES } from '../constants';
 import Game from '../game';
+import Stairs from './environment/stairs';
 
 class Player extends ActiveEntity{
     constructor(x: number, y: number, game: Game) {
@@ -19,38 +20,25 @@ class Player extends ActiveEntity{
 
     public act() {
         this.game.engine.lock();
-        this.game.map.getFOVFromLocation(this.x, this.y);
+        this.game.map.drawFOVFromLocation(this.x, this.y);
         window.document.addEventListener("keydown", this.handleEvent);
     }
 
     private handleEvent = (e: any) => {
-        console.log('player Turn');
-        let keyMap: { [keyCode: number]: number } = {
-            38: 0,
-            33: 1,
-            39: 2,
-            34: 3,
-            40: 4,
-            35: 5,
-            37: 6,
-            36: 7
-        };
-
         var code = e.keyCode;
 
-        if (code === COMMA) {
+        if (code === COMMA && this.game.map.doesSpaceContainStairs(this.x, this.y)) {
             this.game.advanceFloors();
             window.removeEventListener("keydown", this.handleEvent);
             this.game.engine.unlock();
             return;
         }
 
-        if (!(code in keyMap)) {
+        if (!(code in MOVEMENT_KEYCODES)) {
             return;
         }
 
-        console.log(this.x, this.y);
-        var diff = ROT.DIRS[8][keyMap[code]];
+        var diff = ROT.DIRS[8][MOVEMENT_KEYCODES[code]];
         let newX = this.x + diff[0];
         let newY = this.y + diff[1];
 

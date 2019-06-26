@@ -1,6 +1,6 @@
-import Entity from './entity';
+import Entity from '../entity';
 import { RNG } from 'rot-js';
-import { ID_UPPER_BOUND, WALL } from '../constants';
+import { ID_UPPER_BOUND, WALL } from '../../constants';
 
 class Wall extends Entity {
     constructor() {

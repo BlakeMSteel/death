@@ -1,7 +1,7 @@
-import ActiveEntity from './activeEntity';
-import Game from '../game';
+import ActiveEntity from '../activeEntity';
+import Game from '../../game';
 import * as ROT from 'rot-js';
-import { BAT, ID_UPPER_BOUND } from '../constants';
+import { BAT, ID_UPPER_BOUND } from '../../constants';
 
 class Bat extends ActiveEntity {
     private movingRandomlyTurn = false;
