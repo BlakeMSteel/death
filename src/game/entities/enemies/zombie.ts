@@ -1,7 +1,7 @@
-import ActiveEntity from './activeEntity';
-import Game from '../game';
+import ActiveEntity from '../activeEntity';
+import Game from '../../game';
 import * as ROT from 'rot-js';
-import { ZOMBIE, ID_UPPER_BOUND } from '../constants';
+import { ZOMBIE, ID_UPPER_BOUND } from '../../constants';
 
 class Zombie extends ActiveEntity {
     private skippingTurn = false;

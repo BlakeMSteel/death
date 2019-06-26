@@ -3,20 +3,10 @@ export const DISPLAY_WIDTH = 100;
 export const DISPLAY_HEIGHT = 40;
 
 //Entities
-export const BAT = {
-    CHAR: "b",
-    COLOR: "blue",
-    PRIORITY: 41
-}
 export const BOX = {
     CHAR: "*",
     COLOR: "#FFFF00",
     PRIORITY: 1
-}
-export const FLOOR = {
-    CHAR: ".",
-    COLOR: "#808080",
-    PRIORITY: -1
 }
 export const PLAYER = {
     ID: -1,
@@ -24,6 +14,26 @@ export const PLAYER = {
     COLOR: "#00FF00",
     PRIORITY: 100,
     VISION_RADIUS: 12
+}
+
+//Enemies
+export const ENEMY_TYPE_COUNT = 2;
+export const BAT = {
+    CHAR: "b",
+    COLOR: "blue",
+    PRIORITY: 41
+}
+export const ZOMBIE = {
+    CHAR: "z",
+    COLOR: "#CC00FF",
+    PRIORITY: 40
+}
+
+//Environment
+export const FLOOR = {
+    CHAR: ".",
+    COLOR: "#808080",
+    PRIORITY: -1
 }
 export const STAIRS = {
     ID: -2,
@@ -35,11 +45,6 @@ export const WALL = {
     CHAR: "#",
     COLOR: "#FFFFFF",
     PRIORITY: 0
-}
-export const ZOMBIE = {
-    CHAR: "z",
-    COLOR: "#CC00FF",
-    PRIORITY: 40
 }
 
 //Map Types
@@ -56,3 +61,24 @@ export const MAP_TYPE = {
 
 //RNG
 export const ID_UPPER_BOUND = 999999;
+
+//KeyCodes
+export const MOVEMENT_KEYCODES: { [keyCode: number]: number } = {
+    38: 0,
+    56: 0,
+    33: 1,
+    57: 1,
+    39: 2,
+    54: 2,
+    34: 3,
+    51: 3,
+    40: 4,
+    50: 4,
+    35: 5,
+    49: 5,
+    37: 6,
+    52: 6,
+    36: 7,
+    55: 7
+}
+export const COMMA = 188;

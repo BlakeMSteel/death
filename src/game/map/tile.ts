@@ -13,8 +13,13 @@ class Tile {
         this._entities.push(entity);
     }
 
-    public checkEntity(entity: Entity) {
-        return this._entities.includes(entity);
+    public doesTileContainEntity(entity: Entity) {
+        for (let i = 0; i < this._entities.length; i++) {
+            if (entity.equals(this._entities[i])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public getDisplayedTile() {

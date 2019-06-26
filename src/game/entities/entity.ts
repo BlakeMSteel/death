@@ -27,8 +27,8 @@ abstract class Entity {
         this.active = props.active;
     }
 
-    public equals(entity: Entity) {
-        return this.id === entity.id
+    public equals(secondEntity: Entity) {
+        return this.id === secondEntity.id
     }
 }
 

@@ -1,5 +1,5 @@
-import Entity from './entity';
-import { STAIRS } from '../constants';
+import Entity from '../entity';
+import { STAIRS } from '../../constants';
 
 class Stairs extends Entity {
     constructor() {
