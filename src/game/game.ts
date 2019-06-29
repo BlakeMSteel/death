@@ -6,6 +6,7 @@ import * as ROT from 'rot-js';
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH, ENEMY_TYPE_COUNT } from './constants';
 import * as Enemies from './entities/enemies';
 import { Stairs } from './entities/environment';
+import Torch from './entities/environment/torch';
 
 class Game {
     floor: number;
@@ -42,7 +43,10 @@ class Game {
         this.entities = new Array<ActiveEntity>();
 
         this.generatePlayer(this.player);
-        this.generateEntitiesForCurrentFloor();
+        this.generateEnemiesForCurrentFloor();
+        for (let i = 0; i < 10; i++) {
+            this.generateActiveEntity(Torch);
+        }
         this.stairs = this.generateEntity(Stairs);
     }
 
@@ -62,7 +66,7 @@ class Game {
         }
     }
 
-    private generateEntitiesForCurrentFloor() {
+    private generateEnemiesForCurrentFloor() {
         for (let i = 0; i < this.floor * 4; i++) {
             this.createNewEnemyRandomly();
         }

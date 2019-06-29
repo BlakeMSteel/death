@@ -3,11 +3,6 @@ export const DISPLAY_WIDTH = 100;
 export const DISPLAY_HEIGHT = 40;
 
 //Entities
-export const BOX = {
-    CHAR: "*",
-    COLOR: "#FFFF00",
-    PRIORITY: 1
-}
 export const PLAYER = {
     ID: -1,
     CHAR: "@",
@@ -30,16 +25,28 @@ export const ZOMBIE = {
 }
 
 //Environment
+export const BOX = {
+    CHAR: "*",
+    COLOR: "#FFFF00",
+    PRIORITY: 1
+}
 export const FLOOR = {
     CHAR: ".",
     COLOR: "#808080",
     PRIORITY: -1
 }
+export const TORCH = {
+    CHAR: "^",
+    UNLIT_COLOR: "#BFBFBF",
+    LIT_COLOR: "#FF9900",
+    PRIORITY: 4,
+    VISION_RADIUS: 4
+}
 export const STAIRS = {
     ID: -2,
     CHAR: "<",
     COLOR: "orange",
-    PRIORITY: 2
+    PRIORITY: 10
 }
 export const WALL = {
     CHAR: "#",

@@ -20,19 +20,12 @@ class Player extends ActiveEntity{
 
     public act() {
         this.game.engine.lock();
-        this.game.map.drawFOVFromLocation(this.x, this.y);
+        this.game.map.drawFOVFromLocation(this.x, this.y, PLAYER.VISION_RADIUS);
         window.document.addEventListener("keydown", this.handleEvent);
     }
 
     private handleEvent = (e: any) => {
         var code = e.keyCode;
-
-        if (code === COMMA && this.game.map.doesSpaceContainStairs(this.x, this.y)) {
-            this.game.advanceFloors();
-            window.removeEventListener("keydown", this.handleEvent);
-            this.game.engine.unlock();
-            return;
-        }
 
         if (!(code in MOVEMENT_KEYCODES)) {
             return;
@@ -49,9 +42,28 @@ class Player extends ActiveEntity{
         this.game.map.moveEntity(this, newX, newY);
         this.x = newX;
         this.y = newY;
-        window.removeEventListener("keydown", this.handleEvent);
+        this.interactWithCurrentSpace();
+        this.endPlayerTurn();
+    }
+
+    private endPlayerTurn() {
+        window.document.removeEventListener("keydown", this.handleEvent);
+        this.game.map.clearDisplay();
         this.game.engine.unlock();
     }
+
+    protected interactWithCurrentSpace() {
+        if (this.game.map.doesSpaceContainStairs(this.x, this.y)) {
+            this.game.advanceFloors();
+        }
+        this.game.map.actUponSpaceByPlayer(this.x, this.y);
+    }
+
+    public actUponByEnemy() {
+        this.removeSelf();
+    }
+
+    public actUponByPlayer() {}
 }
 
 export default Player;

@@ -25,6 +25,7 @@ class Zombie extends ActiveEntity {
         } else if (super.isInPositionOfPlayer()) {
             super.removeSelf();
         }
+        this.interactWithCurrentSpace();
         this.skippingTurn = !this.skippingTurn;
     }
 }

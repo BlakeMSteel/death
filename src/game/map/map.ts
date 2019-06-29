@@ -39,7 +39,7 @@ class Map {
         if (!entity) {
             entity = new Floor();
         }
-        this.display.draw(x, y, entity.character, entity.color, entity.backgroundColor);
+        this.display.draw(x, y, entity.getCharacter(), entity.getColor(), entity.getBackgroundColor());
     }
 
     private generateMap( type: string = MAP_TYPE.ARENA ) {
@@ -134,12 +134,15 @@ class Map {
         return freeTiles;
     }
 
+    public clearDisplay() {
+        this.display.clear();
+    }
+
     public doesSpaceContainStairs(x: number, y: number) {
         return this._map[x][y].doesTileContainEntity(new Stairs());
     }
 
-    public drawFOVFromLocation(locationX: number, locationY: number) {
-        this.display.clear();
+    public drawFOVFromLocation(locationX: number, locationY: number, radius: number) {
         const lightPasses = (x: number, y: number) => {
             if (x >= 0 && x < DISPLAY_WIDTH && y >= 0 && y < DISPLAY_HEIGHT) {
                 if (!this._map[x][y].isImmoveable()) {
@@ -154,11 +157,19 @@ class Map {
         fov.compute(
             locationX,
             locationY,
-            PLAYER.VISION_RADIUS,
+            radius,
             (x: number, y: number, radius: number, visibility: number) => {
                 this.drawTile(x, y);
             }
         );
+    }
+
+    public actUponSpaceByEnemy(x: number, y: number) {
+        this._map[x][y].actUponByEnemy();
+    }
+
+    public actUponSpaceByPlayer(x: number, y: number) {
+        this._map[x][y].actUponByPlayer();
     }
 
     public isSpaceCollideable(x: number, y: number) {
@@ -174,7 +185,6 @@ class Map {
             for (let j = 0; j < this._map[i].length; j++) {
                 if (this._map[i][j].doesTileContainEntity(entity)) {
                     this._map[i][j].removeEntity(entity);
-                    this.drawTile(i, j);
                     this._map[x][y].addEntity(entity);
                     return;
                 }

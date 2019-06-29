@@ -9,13 +9,13 @@ export interface IEntityProps {
 };
 
 abstract class Entity {
-    public id: number;
-    public character: string;
-    public color: string;
-    public backgroundColor: string | null;
-    public priority: number;
-    public collideable: boolean;
-    public active: boolean;
+    protected id: number;
+    protected character: string;
+    protected color: string;
+    protected backgroundColor: string | null;
+    protected priority: number;
+    protected collideable: boolean;
+    protected active: boolean;
 
     constructor(props: IEntityProps) {
         this.id = props.id;
@@ -25,6 +25,30 @@ abstract class Entity {
         this.collideable = props.collideable;
         this.backgroundColor = props.backgroundColor ? props.backgroundColor : null;
         this.active = props.active;
+    }
+
+    public actUponByEnemy() {}
+
+    public actUponByPlayer() {}
+
+    public getBackgroundColor() {
+        return this.backgroundColor;
+    }
+    
+    public getCharacter() {
+        return this.character;
+    }
+
+    public getCollideable() {
+        return this.collideable;
+    }
+
+    public getColor() {
+        return this.color;
+    }
+
+    public getPriority() {
+        return this.priority;
     }
 
     public equals(secondEntity: Entity) {

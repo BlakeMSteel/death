@@ -39,10 +39,6 @@ abstract class ActiveEntity extends Entity {
     }
 
     protected moveTowardsPlayer(topology: 4 | 8) {
-        if (this.isInPositionOfPlayer()) {
-            this.removeSelf();
-            return;
-        }
         var x = this.game.player.getX();
         var y = this.game.player.getY();
         var passableCallback = (x: number, y: number) => {
@@ -71,6 +67,10 @@ abstract class ActiveEntity extends Entity {
         }
     }
 
+    protected interactWithCurrentSpace() {
+        this.game.map.actUponSpaceByEnemy(this.x, this.y);
+    }
+
     protected isInPositionOfPlayer() {
         return this.x === this.game.player.getX() && this.y === this.game.player.getY();
     }
@@ -78,6 +78,12 @@ abstract class ActiveEntity extends Entity {
     protected removeSelf() {
         this.game.removeEntity(this);
     }
+
+    public actUponByPlayer() {
+        this.removeSelf();
+    }
+
+    public actUponByEnemy() {}
 
     public getX() {
         return this.x;

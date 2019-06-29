@@ -25,14 +25,11 @@ class Bat extends ActiveEntity {
         } else {
             this.moveARandomDirection();
         }
+        this.interactWithCurrentSpace();
         this.movingRandomlyTurn = !this.movingRandomlyTurn;
     }
 
     private moveARandomDirection() {
-        if (super.isInPositionOfPlayer()) {
-            super.removeSelf();
-            return;
-        }
         let possibleChoices = new Array<[number, number]>()
         
         for (let x = -1; x <= 1; x++) {

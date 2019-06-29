@@ -1,4 +1,5 @@
 import Entity from '../entities/entity';
+import ActiveEntity from '../entities/activeEntity';
 
 class Tile {
     private _entities: Array<Entity>;
@@ -7,6 +8,18 @@ class Tile {
         entity: Entity
     ) {
         this._entities = new Array<Entity>(entity);
+    }
+
+    public actUponByEnemy() {
+        this._entities.forEach(entity => {
+            entity.actUponByEnemy();
+        })
+    }
+
+    public actUponByPlayer() {
+        this._entities.forEach(entity => {
+            entity.actUponByPlayer();
+        });
     }
 
     public addEntity(entity: Entity) {
@@ -30,7 +43,7 @@ class Tile {
         let highestPriorityEntity = this._entities[0];
 
         for (let i = 1; i < this._entities.length; i++) {
-            if (this._entities[i].priority > highestPriorityEntity.priority) {
+            if (this._entities[i].getPriority() > highestPriorityEntity.getPriority()) {
                 highestPriorityEntity = this._entities[i];
             }
         }
@@ -41,7 +54,7 @@ class Tile {
     public isCollideable() {
         let collideable = false;
         this._entities.forEach(entity => {
-            if (entity.collideable) {
+            if (entity.getCollideable()) {
                 collideable = true;
             }
         });
@@ -51,7 +64,7 @@ class Tile {
     public isImmoveable() {
         let immoveable = false;
         this._entities.forEach(entity => {
-            if (entity.collideable && !entity.active) {
+            if (entity.getCollideable() && !(entity instanceof ActiveEntity)) {
                 immoveable = true;
             }
         })
