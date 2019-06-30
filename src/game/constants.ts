@@ -1,12 +1,18 @@
 //Display
+export const FONT_SIZE = 15;
 export const DISPLAY_WIDTH = 100;
-export const DISPLAY_HEIGHT = 40;
+export const MAP_HEIGHT = 40;
+export const CONSOLE_HEIGHT = 20;
+
+//Console
+export const GENERIC_COLOR = '#FFFFFF';
+export const DANGER_COLOR = '#FF0000';
 
 //Entities
 export const PLAYER = {
     ID: -1,
-    CHAR: "@",
-    COLOR: "#00FF00",
+    CHAR: '@',
+    COLOR: '#00FF00',
     PRIORITY: 100,
     VISION_RADIUS: 12
 }
@@ -14,43 +20,43 @@ export const PLAYER = {
 //Enemies
 export const ENEMY_TYPE_COUNT = 2;
 export const BAT = {
-    CHAR: "b",
-    COLOR: "blue",
+    CHAR: 'b',
+    COLOR: '#0066ff',
     PRIORITY: 41
 }
 export const ZOMBIE = {
-    CHAR: "z",
-    COLOR: "#CC00FF",
+    CHAR: 'z',
+    COLOR: '#CC00FF',
     PRIORITY: 40
 }
 
 //Environment
 export const BOX = {
-    CHAR: "*",
-    COLOR: "#FFFF00",
+    CHAR: '*',
+    COLOR: '#FFFF00',
     PRIORITY: 1
 }
 export const FLOOR = {
-    CHAR: ".",
-    COLOR: "#808080",
+    CHAR: '.',
+    COLOR: '#808080',
     PRIORITY: -1
 }
 export const TORCH = {
-    CHAR: "^",
-    UNLIT_COLOR: "#BFBFBF",
-    LIT_COLOR: "#FF9900",
+    CHAR: '^',
+    UNLIT_COLOR: '#BFBFBF',
+    LIT_COLOR: '#FF9900',
     PRIORITY: 4,
     VISION_RADIUS: 4
 }
 export const STAIRS = {
     ID: -2,
-    CHAR: "<",
-    COLOR: "orange",
+    CHAR: '<',
+    COLOR: 'orange',
     PRIORITY: 10
 }
 export const WALL = {
-    CHAR: "#",
-    COLOR: "#FFFFFF",
+    CHAR: '#',
+    COLOR: '#FFFFFF',
     PRIORITY: 0
 }
 

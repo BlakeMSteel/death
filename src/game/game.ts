@@ -3,12 +3,14 @@ import Entity from './entities/entity';
 import Map from './map/map';
 import Player from './entities/player';
 import * as ROT from 'rot-js';
-import { DISPLAY_HEIGHT, DISPLAY_WIDTH, ENEMY_TYPE_COUNT } from './constants';
+import { ENEMY_TYPE_COUNT } from './constants';
 import * as Enemies from './entities/enemies';
 import { Stairs } from './entities/environment';
 import Torch from './entities/environment/torch';
+import Logger from './logger/logger';
 
 class Game {
+    logger: Logger;
     floor: number;
     engine: ROT.Engine;
     entities: Array<ActiveEntity>;
@@ -22,7 +24,8 @@ class Game {
         this.engine = new ROT.Engine(this.scheduler);
         this.entities = new Array<ActiveEntity>();
         this.player = new Player(-1, -1, this);
-        this.map = new Map(DISPLAY_WIDTH, DISPLAY_HEIGHT);
+        this.logger = new Logger();
+        this.map = new Map();
         this.advanceFloors();
         this.engine.start();
     }
@@ -38,7 +41,7 @@ class Game {
         if (this.map) {
             this.map.removeDisplayFromDOM();
         }
-        this.map = new Map(DISPLAY_WIDTH, DISPLAY_HEIGHT);
+        this.map = new Map();
 
         this.entities = new Array<ActiveEntity>();
 

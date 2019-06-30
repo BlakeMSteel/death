@@ -1,6 +1,6 @@
-import Entity, { IEntityProps } from "./entity";
-import Game from "../game";
-import * as ROT from "rot-js";
+import Entity, { IEntityProps } from './entity';
+import Game from '../game';
+import * as ROT from 'rot-js';
 
 export interface IActiveEntityProps {
     x: number,
@@ -53,12 +53,7 @@ abstract class ActiveEntity extends Entity {
         astar.compute(this.x, this.y, pathCallback);
 
         path.shift(); // Remove current position
-        if (path.length == 0) {
-            
-        } else if (path.length == 1) {
-            alert("Game over - you were captured!");
-            this.game.engine.lock();
-        } else {
+        if (path.length > 0) {
             x = path[0][0];
             y = path[0][1];
             this.game.map.moveEntity(this, x, y);

@@ -1,7 +1,7 @@
 import ActiveEntity from '../activeEntity';
 import Game from '../../game';
 import * as ROT from 'rot-js';
-import { TORCH, ID_UPPER_BOUND } from '../../constants';
+import { TORCH, ID_UPPER_BOUND, DANGER_COLOR } from '../../constants';
 
 class Torch extends ActiveEntity {
     private lit = false;
@@ -26,13 +26,19 @@ class Torch extends ActiveEntity {
     }
 
     public actUponByPlayer() {
-        this.lit = true;
-        this.color = TORCH.LIT_COLOR;
+        if (!this.lit) {
+            this.game.logger.logMessage('You have lit a torch.');
+            this.lit = true;
+            this.color = TORCH.LIT_COLOR;
+        }
     }
 
     public actUponByEnemy() {
-        this.lit = false;
-        this.color = TORCH.UNLIT_COLOR;
+        if (this.lit) {
+            this.game.logger.logMessage('Another creature has quenched a torch.', DANGER_COLOR);
+            this.lit = false;
+            this.color = TORCH.UNLIT_COLOR;
+        }
     }
 }
 

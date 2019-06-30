@@ -1,6 +1,6 @@
 import ActiveEntity from './activeEntity';
 import * as ROT from 'rot-js';
-import { PLAYER, COMMA, MOVEMENT_KEYCODES } from '../constants';
+import { PLAYER, COMMA, MOVEMENT_KEYCODES, DANGER_COLOR } from '../constants';
 import Game from '../game';
 import Stairs from './environment/stairs';
 
@@ -21,7 +21,7 @@ class Player extends ActiveEntity{
     public act() {
         this.game.engine.lock();
         this.game.map.drawFOVFromLocation(this.x, this.y, PLAYER.VISION_RADIUS);
-        window.document.addEventListener("keydown", this.handleEvent);
+        window.document.addEventListener('keydown', this.handleEvent);
     }
 
     private handleEvent = (e: any) => {
@@ -47,20 +47,23 @@ class Player extends ActiveEntity{
     }
 
     private endPlayerTurn() {
-        window.document.removeEventListener("keydown", this.handleEvent);
+        window.document.removeEventListener('keydown', this.handleEvent);
         this.game.map.clearDisplay();
         this.game.engine.unlock();
     }
 
     protected interactWithCurrentSpace() {
         if (this.game.map.doesSpaceContainStairs(this.x, this.y)) {
+            this.game.logger.logMessage('You ascend..');
             this.game.advanceFloors();
         }
         this.game.map.actUponSpaceByPlayer(this.x, this.y);
     }
 
     public actUponByEnemy() {
+        this.game.logger.logMessage('You were slain!', DANGER_COLOR);
         this.removeSelf();
+        this.game.engine.lock();
     }
 
     public actUponByPlayer() {}

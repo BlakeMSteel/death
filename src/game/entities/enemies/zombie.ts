@@ -28,6 +28,11 @@ class Zombie extends ActiveEntity {
         this.interactWithCurrentSpace();
         this.skippingTurn = !this.skippingTurn;
     }
+
+    public actUponByPlayer() {
+        this.game.logger.logMessage('You have slain a zombie!');
+        super.actUponByPlayer();
+    }
 }
 
 export default Zombie;
