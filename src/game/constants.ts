@@ -2,7 +2,7 @@
 export const FONT_SIZE = 15;
 export const DISPLAY_WIDTH = 100;
 export const MAP_HEIGHT = 40;
-export const CONSOLE_HEIGHT = 20;
+export const CONSOLE_HEIGHT = 7;
 
 //Console
 export const GENERIC_COLOR = '#FFFFFF';
