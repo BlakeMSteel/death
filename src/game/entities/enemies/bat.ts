@@ -29,6 +29,11 @@ class Bat extends ActiveEntity {
         this.movingRandomlyTurn = !this.movingRandomlyTurn;
     }
 
+    public actUponByPlayer() {
+        this.game.logger.logMessage('You have slain a bat!');
+        super.actUponByPlayer();
+    }
+
     private moveARandomDirection() {
         let possibleChoices = new Array<[number, number]>()
         
