@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/death/static/css/main.2cce8147.chunk.css",
-    "main.js": "/death/static/js/main.72aeb7f7.chunk.js",
-    "main.js.map": "/death/static/js/main.72aeb7f7.chunk.js.map",
+    "main.js": "/death/static/js/main.a4b9b871.chunk.js",
+    "main.js.map": "/death/static/js/main.a4b9b871.chunk.js.map",
     "runtime~main.js": "/death/static/js/runtime~main.f752169a.js",
     "runtime~main.js.map": "/death/static/js/runtime~main.f752169a.js.map",
     "static/js/2.b37565ef.chunk.js": "/death/static/js/2.b37565ef.chunk.js",
     "static/js/2.b37565ef.chunk.js.map": "/death/static/js/2.b37565ef.chunk.js.map",
     "index.html": "/death/index.html",
-    "precache-manifest.05e22fedf5a0415ed6251387d860da27.js": "/death/precache-manifest.05e22fedf5a0415ed6251387d860da27.js",
+    "precache-manifest.b60e1a6d97255831e51e00e00f706510.js": "/death/precache-manifest.b60e1a6d97255831e51e00e00f706510.js",
     "service-worker.js": "/death/service-worker.js",
     "static/css/main.2cce8147.chunk.css.map": "/death/static/css/main.2cce8147.chunk.css.map"
   }
