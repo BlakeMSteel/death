@@ -7,6 +7,14 @@ export const CONSOLE_HEIGHT = 7;
 //Console
 export const GENERIC_COLOR = '#FFFFFF';
 export const DANGER_COLOR = '#FF0000';
+export const ENTRANCE_TEXT = [
+    'The doors slam behind you. As the darkness surrounds you, you light your lantern.',
+    'The stench of rotting bodies overwhelms you, but you push on, entering the mansion.',
+    'Summoning courage from within the depths of your heart, you walk into the mansion.',
+    'You hear low growls from within. Steeling yourself, you open the doors.',
+    'Sweat moistens your skin. You wipe it from your brow, stepping through the doors.',
+    'The coppery air rests on your tongue. You hoist your sword and move forward.'
+]
 
 //Entities
 export const PLAYER = {
@@ -18,16 +26,51 @@ export const PLAYER = {
 }
 
 //Enemies
-export const ENEMY_TYPE_COUNT = 2;
+export const ENEMY_TYPE_COUNT = 3;
 export const BAT = {
     CHAR: 'b',
     COLOR: '#0066ff',
-    PRIORITY: 41
+    PRIORITY: 41,
+    DEATH_TEXT: [
+        'You skewer the bat on your sword, taking only a moment to push it off before continuing.',
+        'You swat the bat out of the air with your shield, your boot coming down on it before it can fly again.',
+        'You snatch the bat out of the air and throw it at the ground. It lands with a sickening crunch.'
+    ],
+    PLAYER_DEATH_TEXT: [
+        'The bat gouges out your eyes. You stumble blindly and eventully into your death.',
+        'The last of your blood is drained by the bat.'
+    ],
+    SENSE_RADIUS: 10
 }
 export const ZOMBIE = {
     CHAR: 'z',
     COLOR: '#CC00FF',
-    PRIORITY: 40
+    PRIORITY: 40,
+    DEATH_TEXT: [
+        'You sink your sword through the chest of the zombie and finish it off with a shield to the head.',
+        'You sever the zombie\'s limbs one at a time before leaving it to struggle helplessly.',
+        'You slash through the zombie\'s neck, its head slowly falling off, body closely following.'
+    ],
+    PLAYER_DEATH_TEXT: [
+        'The zombie pushes past your shield and abruptly removes your jugular.',
+        'You are pushed down. The zombie raises its fists and slams them down on your chest.'
+    ],
+    SENSE_RADIUS: 15
+}
+export const GHOST = {
+    CHAR: 'g',
+    COLOR: '#ADD8E6',
+    PRIORITY: 42,
+    DEATH_TEXT: [
+        'Your sword slashes through the ghost, and it dissapates, realizing its state of being.',
+        'You raise your shield and press forward. The ghost dissolves on your magical shield.',
+        'You have a friendly conversation with the ghost and it decides to leave you be.'
+    ],
+    PLAYER_DEATH_TEXT: [
+        'The ghost pushes its hand through your chest and grips your heart. Everything goes black.',
+        'You gasp as the incorporeal form of the ghost possesses you. It flexes your fingers.'
+    ],
+    SENSE_RADIUS: 15
 }
 
 //Environment

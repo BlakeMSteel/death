@@ -19,12 +19,15 @@ class Bat extends ActiveEntity {
         })
     }
 
-    public act() {
-        if (!this.movingRandomlyTurn) {
-            this.moveTowardsPlayer(8);
+    protected takeTurn() {
+        var pathToPlayer = this.getPathToPlayer(8);
+
+        if (pathToPlayer.length <= BAT.SENSE_RADIUS && !this.movingRandomlyTurn) {
+            this.moveAlongPath(pathToPlayer);
         } else {
             this.moveARandomDirection();
         }
+
         this.interactWithCurrentSpace();
         this.movingRandomlyTurn = !this.movingRandomlyTurn;
     }
@@ -32,25 +35,6 @@ class Bat extends ActiveEntity {
     public actUponByPlayer() {
         this.game.logger.logMessage('You have slain a bat!');
         super.actUponByPlayer();
-    }
-
-    private moveARandomDirection() {
-        let possibleChoices = new Array<[number, number]>()
-        
-        for (let x = -1; x <= 1; x++) {
-            for (let y = -1; y <= 1; y++) {
-                if (!this.game.map.isSpaceCollideable(this.x + x, this.y + y)) {
-                    possibleChoices.push([this.x + x, this.y + y]);
-                }
-            }
-        }
-
-        if (possibleChoices.length > 0) {
-            const randomTile = possibleChoices[ROT.RNG.getUniformInt(0, possibleChoices.length - 1)];
-            this.game.map.moveEntity(this, randomTile[0], randomTile[1]);
-            this.x = randomTile[0];
-            this.y = randomTile[1];
-        }
     }
 }
 

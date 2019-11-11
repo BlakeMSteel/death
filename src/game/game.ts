@@ -96,6 +96,8 @@ class Game {
                 return this.generateActiveEntity(Enemies.Bat);
             case(2):
                 return this.generateActiveEntity(Enemies.Zombie);
+            case(3):
+                return this.generateActiveEntity(Enemies.Ghost);
             default:
                 return this.generateActiveEntity(Enemies.Bat);
         };

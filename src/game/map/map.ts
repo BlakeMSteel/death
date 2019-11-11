@@ -8,17 +8,17 @@ import Entity from '../entities/entity';
 import Stairs from '../entities/environment/stairs';
 
 class Map {
-    private _map: Array<Array<Tile>>;
+    private map: Array<Array<Tile>>;
     private display: ROT.Display;
 
     constructor() {
-        this._map = this.create2DArrayOfTiles(DISPLAY_WIDTH, MAP_HEIGHT);
+        this.map = this.create2DArrayOfTiles(DISPLAY_WIDTH, MAP_HEIGHT);
         this.display = new ROT.Display({
             width: DISPLAY_WIDTH,
             height: MAP_HEIGHT,
             fontSize: FONT_SIZE
         });
-        this.generateMap(MAP_TYPE.DUNGEON_UNIFORM);
+        this.generateMap(MAP_TYPE.DUNGEON_ROGUE);
     }
 
     private create2DArrayOfTiles(width: number, height: number) {
@@ -29,14 +29,6 @@ class Map {
         }
 
         return array;
-    }
-
-    private drawTile(x: number, y: number) {
-        let entity = this._map[x][y].getDisplayedTile();
-        if (!entity) {
-            entity = new Floor();
-        }
-        this.display.draw(x, y, entity.getCharacter(), entity.getColor(), entity.getBackgroundColor());
     }
 
     private generateMap( type: string = MAP_TYPE.ARENA ) {
@@ -78,7 +70,7 @@ class Map {
                     DISPLAY_WIDTH,
                     MAP_HEIGHT,
                     {
-                        roomDugPercentage: 0.5,
+                        roomDugPercentage: 0.9,
                         roomHeight: [4, 12],
                         roomWidth: [4, 12],
                     }
@@ -102,9 +94,9 @@ class Map {
             //value = 1 -> wall
             //value = 0 -> empty space
             if (value) {
-                this._map[x][y] = new Tile(new Wall());
+                this.map[x][y] = new Tile(new Wall());
             } else {
-                this._map[x][y] = new Tile(new Floor());
+                this.map[x][y] = new Tile(new Floor());
             }
         }
 
@@ -120,9 +112,9 @@ class Map {
     private getFreeTiles() {
         let freeTiles = new Array<string>();
         
-        for (let x = 0; x < this._map.length; x++) {
-            for (let y = 0; y < this._map[x].length; y++) {
-                if (!this._map[x][y].isCollideable()) {
+        for (let x = 0; x < this.map.length; x++) {
+            for (let y = 0; y < this.map[x].length; y++) {
+                if (!this.map[x][y].isCollideable()) {
                     freeTiles.push(x + ',' + y);
                 }
             }
@@ -136,13 +128,13 @@ class Map {
     }
 
     public doesSpaceContainStairs(x: number, y: number) {
-        return this._map[x][y].doesTileContainEntity(new Stairs());
+        return this.map[x][y].doesTileContainEntity(new Stairs());
     }
 
     public drawFOVFromLocation(locationX: number, locationY: number, radius: number) {
         const lightPasses = (x: number, y: number) => {
             if (x >= 0 && x < DISPLAY_WIDTH && y >= 0 && y < MAP_HEIGHT) {
-                if (!this._map[x][y].isImmoveable()) {
+                if (!this.map[x][y].isImmoveable()) {
                     return true;
                 }
             }
@@ -161,12 +153,20 @@ class Map {
         );
     }
 
+    public drawTile(x: number, y: number) {
+        let entity = this.map[x][y].getDisplayedTile();
+        if (!entity) {
+            entity = new Floor();
+        }
+        this.display.draw(x, y, entity.getCharacter(), entity.getColor(), entity.getBackgroundColor());
+    }
+
     public actUponSpaceByEnemy(x: number, y: number) {
-        this._map[x][y].actUponByEnemy();
+        this.map[x][y].actUponByEnemy();
     }
 
     public actUponSpaceByPlayer(x: number, y: number) {
-        this._map[x][y].actUponByPlayer();
+        this.map[x][y].actUponByPlayer();
     }
 
     public addDisplayToDOM() {
@@ -175,19 +175,19 @@ class Map {
     }
 
     public isSpaceCollideable(x: number, y: number) {
-        return this._map[x][y].isCollideable();
+        return this.map[x][y].isCollideable();
     }
 
     public isSpaceOccupied(x: number, y: number) {
-        return this._map[x][y].isImmoveable();
+        return this.map[x][y].isImmoveable();
     }
 
     public moveEntity(entity: Entity, x: number, y: number) {
-        for (let i = 0; i < this._map.length; i++) {
-            for (let j = 0; j < this._map[i].length; j++) {
-                if (this._map[i][j].doesTileContainEntity(entity)) {
-                    this._map[i][j].removeEntity(entity);
-                    this._map[x][y].addEntity(entity);
+        for (let i = 0; i < this.map.length; i++) {
+            for (let j = 0; j < this.map[i].length; j++) {
+                if (this.map[i][j].doesTileContainEntity(entity)) {
+                    this.map[i][j].removeEntity(entity);
+                    this.map[x][y].addEntity(entity);
                     return;
                 }
             }
@@ -208,7 +208,7 @@ class Map {
         entity.setX(x);
         entity.setY(y);
 
-        this._map[x][y].addEntity(entity);
+        this.map[x][y].addEntity(entity);
         return true;
     }
 
@@ -224,7 +224,7 @@ class Map {
         const x = parseInt(xyParts[0]);
         const y = parseInt(xyParts[1]);
 
-        this._map[x][y].addEntity(entity);
+        this.map[x][y].addEntity(entity);
         return true;
     }
 
@@ -233,9 +233,9 @@ class Map {
     }
 
     public removeEntity(entity: ActiveEntity) {
-        for (let x = 0; x < this._map.length; x++) {
-            for (let y = 0; y < this._map[x].length; y++) {
-                this._map[x][y].removeEntity(entity);
+        for (let x = 0; x < this.map.length; x++) {
+            for (let y = 0; y < this.map[x].length; y++) {
+                this.map[x][y].removeEntity(entity);
             }
         }
     }
