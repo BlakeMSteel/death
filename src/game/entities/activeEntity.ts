@@ -35,10 +35,25 @@ abstract class ActiveEntity extends Entity {
     }
 
     public act() {
+        this.takeTurn();
+    }
+
+    protected takeTurn() {
         this.game.engine.lock();
     }
 
-    protected moveTowardsPlayer(topology: 4 | 8) {
+    protected moveAlongPath(path: Array<[number, number]>) {
+        path.shift(); // Remove current position
+        if (path.length > 0) {
+            var x = path[0][0];
+            var y = path[0][1];
+            this.game.map.moveEntity(this, x, y);
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    protected getPathToPlayer(topology: 4 | 8) {
         var x = this.game.player.getX();
         var y = this.game.player.getY();
         var passableCallback = (x: number, y: number) => {
@@ -51,14 +66,25 @@ abstract class ActiveEntity extends Entity {
             path.push([x, y]);
         }
         astar.compute(this.x, this.y, pathCallback);
+        return path;
+    }
 
-        path.shift(); // Remove current position
-        if (path.length > 0) {
-            x = path[0][0];
-            y = path[0][1];
-            this.game.map.moveEntity(this, x, y);
-            this.x = x;
-            this.y = y;
+    protected moveARandomDirection() {
+        let possibleChoices = new Array<[number, number]>()
+        
+        for (let x = -1; x <= 1; x++) {
+            for (let y = -1; y <= 1; y++) {
+                if (!this.game.map.isSpaceCollideable(this.x + x, this.y + y)) {
+                    possibleChoices.push([this.x + x, this.y + y]);
+                }
+            }
+        }
+
+        if (possibleChoices.length > 0) {
+            const randomTile = possibleChoices[ROT.RNG.getUniformInt(0, possibleChoices.length - 1)];
+            this.game.map.moveEntity(this, randomTile[0], randomTile[1]);
+            this.x = randomTile[0];
+            this.y = randomTile[1];
         }
     }
 

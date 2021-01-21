@@ -19,12 +19,13 @@ class Zombie extends ActiveEntity {
         })
     }
 
-    public act() {
-        if (!this.skippingTurn) {
-            super.moveTowardsPlayer(4);
-        } else if (super.isInPositionOfPlayer()) {
-            super.removeSelf();
+    protected takeTurn() {
+        var pathToPlayer = this.getPathToPlayer(4);
+
+        if (pathToPlayer.length <= ZOMBIE.SENSE_RADIUS && !this.skippingTurn) {
+            this.moveAlongPath(pathToPlayer);
         }
+
         this.interactWithCurrentSpace();
         this.skippingTurn = !this.skippingTurn;
     }

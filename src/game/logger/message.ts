@@ -14,8 +14,8 @@ class Message {
     }
 
     private trimTextToMaxCharacters() {
-        if (this.text.length > DISPLAY_WIDTH) {
-            this.text = this.text.substring(0, DISPLAY_WIDTH);
+        if (this.text.length > DISPLAY_WIDTH - 2) {
+            this.text = this.text.substring(0, DISPLAY_WIDTH - 2);
         }
     }
 }

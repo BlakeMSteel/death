@@ -12,7 +12,7 @@ class Logger {
             fontSize: 15
         })
         this.addDisplayToDOM();
-        this.logMessage('You enter the mansion of Strahd von Zarovich. Good luck.')
+        this.logMessage('The doors slam behind you. As the darkness overwhelms you, you light your lantern.');
     }
 
     private addDisplayToDOM() {
